@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <!-- Try loading the image favicon first -->
     <link rel="icon" type="image/png" href="index.png">
     <title>The Chorus | Official Website</title>
@@ -19,6 +19,9 @@
                 <span>The Chorus</span>
                 <div class="logo-tagline">Where Music Lives</div>
             </div>
+            <button id="sidebarCloseBtn" class="sidebar-close-btn" aria-label="Close navigation">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         
         <nav class="sidebar-nav">
@@ -70,6 +73,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -312,25 +318,6 @@
                     <p>Customize your fan experience</p>
                 </div>
                 
-                <div class="settings-container">
-                    <div class="settings-card">
-                        <h3>Profile Settings</h3>
-                        <form id="settingsForm">
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" id="settingsName" placeholder="Your name">
-                            </div>
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" id="settingsEmail" placeholder="Your email" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label>Mobile Number</label>
-                                <input type="tel" id="settingsMobile" placeholder="Mobile number">
-                            </div>
-                            <button type="submit" class="save-btn">Save Changes</button>
-                        </form>
-                    </div>
                     
                     <div class="settings-card">
                         <h3>Notification Preferences</h3>
@@ -347,12 +334,7 @@
                         <button class="save-btn" id="saveNotificationsBtn">Save Preferences</button>
                     </div>
 
-                    <div class="settings-card">
-                        <h3>Security</h3>
-                        <button class="change-password-btn" id="changePasswordBtn">
-                            <i class="fas fa-key"></i> Change Password
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </div>

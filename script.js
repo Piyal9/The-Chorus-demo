@@ -29,23 +29,23 @@ function showToast(message, type = 'info') {
 function initThemeSwitcher() {
     const savedTheme = localStorage.getItem('selectedTheme') || 'default';
     document.body.setAttribute('data-theme', savedTheme);
-    
+
     const themeSwitcher = document.getElementById('themeSwitcher');
     const themeDropdown = document.getElementById('themeDropdown');
-    
+
     if (themeSwitcher) {
         themeSwitcher.addEventListener('click', (e) => {
             e.stopPropagation();
             themeDropdown.classList.toggle('show');
         });
     }
-    
+
     document.addEventListener('click', (e) => {
         if (themeSwitcher && !themeSwitcher.contains(e.target)) {
             themeDropdown.classList.remove('show');
         }
     });
-    
+
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', (e) => {
@@ -144,7 +144,7 @@ function loadFromLocalStorage() {
     if (saved) {
         try {
             announcements = JSON.parse(saved);
-        } catch(e) {
+        } catch (e) {
             announcements = [...defaultAnnouncements];
         }
     } else {
@@ -224,7 +224,7 @@ function escapeHtml(text) {
 function renderAnnouncements() {
     const container = document.getElementById('announcementsContainer');
     if (!container) return;
-    
+
     if (announcements.length === 0) {
         container.innerHTML = `
             <div class="empty-announcements">
@@ -234,7 +234,7 @@ function renderAnnouncements() {
         `;
         return;
     }
-    
+
     container.innerHTML = announcements.map(announcement => `
         <div class="announcement-item" data-id="${announcement.id}">
             <div class="announcement-content">
@@ -330,7 +330,7 @@ function initAnnouncements() {
     const addAnnouncementModal = document.getElementById('addAnnouncementModal');
     const closeAnnouncementModal = document.querySelector('.close-announcement-modal');
     const saveAnnouncementBtn = document.getElementById('saveAnnouncementBtn');
-    
+
     loadAnnouncements();
 
     // Setup Supabase Realtime channel for instant cross-device updates
@@ -349,29 +349,29 @@ function initAnnouncements() {
             console.warn('Realtime subscription error:', err);
         }
     }
-    
+
     if (addAnnouncementBtn) {
-        addAnnouncementBtn.onclick = function() {
+        addAnnouncementBtn.onclick = function () {
             if (addAnnouncementModal) {
                 addAnnouncementModal.style.display = 'block';
             }
         }
     }
-    
+
     if (closeAnnouncementModal) {
-        closeAnnouncementModal.onclick = function() {
+        closeAnnouncementModal.onclick = function () {
             if (addAnnouncementModal) {
                 addAnnouncementModal.style.display = 'none';
             }
         }
     }
-    
+
     if (saveAnnouncementBtn) {
-        saveAnnouncementBtn.onclick = async function() {
+        saveAnnouncementBtn.onclick = async function () {
             const week = document.getElementById('announcementWeek').value;
             const month = document.getElementById('announcementMonth').value;
             const message = document.getElementById('announcementMessage').value;
-            
+
             if (week && month && message) {
                 saveAnnouncementBtn.disabled = true;
                 const originalText = saveAnnouncementBtn.textContent;
@@ -394,7 +394,7 @@ function initAnnouncements() {
             }
         }
     }
-    
+
     window.addEventListener('click', (e) => {
         if (e.target === addAnnouncementModal) {
             addAnnouncementModal.style.display = 'none';
@@ -408,7 +408,7 @@ function loadNotes() {
     if (savedNotes) {
         try {
             notes = JSON.parse(savedNotes);
-        } catch(e) {
+        } catch (e) {
             notes = [];
         }
     } else {
@@ -421,7 +421,7 @@ function loadNotes() {
 function renderNotes() {
     const notesList = document.getElementById('notesList');
     if (!notesList) return;
-    
+
     if (notes.length === 0) {
         notesList.innerHTML = `
             <div class="empty-notes">
@@ -431,7 +431,7 @@ function renderNotes() {
         `;
         return;
     }
-    
+
     let html = '';
     notes.forEach((note, index) => {
         const previewContent = note.content.length > 80 ? note.content.substring(0, 80) + '...' : note.content;
@@ -446,7 +446,7 @@ function renderNotes() {
         `;
     });
     notesList.innerHTML = html;
-    
+
     document.querySelectorAll('.delete-note').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -465,13 +465,13 @@ function addNote(title, content) {
         showToast('Please enter note content', 'error');
         return false;
     }
-    
+
     notes.unshift({
         title: title.trim(),
         content: content.trim(),
         date: new Date().toISOString()
     });
-    
+
     localStorage.setItem('userNotes', JSON.stringify(notes));
     renderNotes();
     updateNotesCount();
@@ -503,14 +503,14 @@ function initNotes() {
     const saveNoteBtn = document.getElementById('saveNoteBtn');
     const noteTitle = document.getElementById('noteTitle');
     const noteContent = document.getElementById('noteContent');
-    
+
     if (notificationsIcon) {
         notificationsIcon.addEventListener('click', (e) => {
             e.stopPropagation();
             notesBox.classList.toggle('show');
         });
     }
-    
+
     document.addEventListener('click', (e) => {
         if (notesBox && notificationsIcon) {
             if (!notificationsIcon.contains(e.target) && !notesBox.contains(e.target)) {
@@ -518,13 +518,13 @@ function initNotes() {
             }
         }
     });
-    
+
     if (addNoteBtn) {
         addNoteBtn.addEventListener('click', () => {
             if (addNoteModal) addNoteModal.style.display = 'block';
         });
     }
-    
+
     if (closeNoteModal) {
         closeNoteModal.addEventListener('click', () => {
             if (addNoteModal) addNoteModal.style.display = 'none';
@@ -532,7 +532,7 @@ function initNotes() {
             if (noteContent) noteContent.value = '';
         });
     }
-    
+
     if (saveNoteBtn) {
         saveNoteBtn.addEventListener('click', () => {
             const title = noteTitle ? noteTitle.value : '';
@@ -544,7 +544,7 @@ function initNotes() {
             }
         });
     }
-    
+
     window.addEventListener('click', (e) => {
         if (e.target === addNoteModal) {
             if (addNoteModal) addNoteModal.style.display = 'none';
@@ -552,7 +552,7 @@ function initNotes() {
             if (noteContent) noteContent.value = '';
         }
     });
-    
+
     loadNotes();
 }
 
@@ -563,37 +563,37 @@ function updateUserInterface() {
     const userId = currentUser?.user_id || 'TC001';
     const userAvatar = userName.substring(0, 2).toUpperCase();
     const userMobile = currentUser?.mobile || '+91 9073556848';
-    
+
     const userNameEl = document.getElementById('userName');
     const userEmailEl = document.getElementById('userEmail');
     const userAvatarEl = document.getElementById('userAvatar');
     const welcomeNameEl = document.getElementById('welcomeName');
-    
+
     if (userNameEl) userNameEl.textContent = userName;
     if (userEmailEl) userEmailEl.textContent = userEmail;
     if (userAvatarEl && !userAvatarEl.querySelector('img')) {
-    userAvatarEl.textContent = userAvatar;
+        userAvatarEl.textContent = userAvatar;
     }
     if (welcomeNameEl) welcomeNameEl.textContent = userName.split(' ')[0];
-    
+
     const profileNameEl = document.getElementById('profileName');
     const profileAvatarEl = document.getElementById('profileAvatar');
     const profileUserIdEl = document.getElementById('profileUserId');
     const profileEmailEl = document.getElementById('profileEmail');
     const profileMobileEl = document.getElementById('profileMobile');
     const profileJoinDateEl = document.getElementById('profileJoinDate');
-    
+
     if (profileNameEl) profileNameEl.textContent = userName;
     if (profileAvatarEl) profileAvatarEl.textContent = userAvatar;
     if (profileUserIdEl) profileUserIdEl.textContent = userId;
     if (profileEmailEl) profileEmailEl.textContent = userEmail;
     if (profileMobileEl) profileMobileEl.textContent = userMobile;
     if (profileJoinDateEl) profileJoinDateEl.textContent = new Date().toLocaleDateString();
-    
+
     const settingsName = document.getElementById('settingsName');
     const settingsEmail = document.getElementById('settingsEmail');
     const settingsMobile = document.getElementById('settingsMobile');
-    
+
     if (settingsName) settingsName.value = userName;
     if (settingsEmail) settingsEmail.value = userEmail;
     if (settingsMobile) settingsMobile.value = currentUser?.mobile || '';
@@ -618,6 +618,23 @@ function renderAccountDropdown() {
     if (dropdownEmailEl) dropdownEmailEl.textContent = userEmail;
 }
 
+// ============ MOBILE SIDEBAR HELPERS ============
+function openMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.add('mobile-open');
+    if (overlay) overlay.classList.add('active');
+    document.body.classList.add('sidebar-open');
+}
+
+function closeMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+}
+
 // ============ PAGE NAVIGATION ============
 function initNavigation() {
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -630,6 +647,12 @@ function initNavigation() {
             const targetPage = document.getElementById(`${pageId}Page`);
             if (targetPage) targetPage.classList.add('active');
             closeDropdown();
+
+            // Automatically close mobile drawer when user navigates
+            closeMobileSidebar();
+
+            // Smoothly scroll to top of page on navigation
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 }
@@ -637,15 +660,58 @@ function initNavigation() {
 // ============ SIDEBAR TOGGLE ============
 function initSidebarToggle() {
     const toggle = document.getElementById('sidebarToggle');
+    const closeBtn = document.getElementById('sidebarCloseBtn');
+    const overlay = document.getElementById('sidebarOverlay');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.main-content');
-    
+
     if (toggle) {
-        toggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('expanded');
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.innerWidth <= 992) {
+                if (sidebar && sidebar.classList.contains('mobile-open')) {
+                    closeMobileSidebar();
+                } else {
+                    openMobileSidebar();
+                }
+            } else {
+                if (sidebar) sidebar.classList.toggle('collapsed');
+                if (mainContent) mainContent.classList.toggle('expanded');
+            }
         });
     }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMobileSidebar();
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            closeMobileSidebar();
+        });
+    }
+
+    // Auto-clean mobile state when resizing to larger screen
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 992) {
+            closeMobileSidebar();
+        }
+    });
+
+    // Close overlays/modals on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileSidebar();
+            closeDropdown();
+            const notesBox = document.getElementById('notesBox');
+            if (notesBox) notesBox.classList.remove('show');
+            const themeDropdown = document.getElementById('themeDropdown');
+            if (themeDropdown) themeDropdown.classList.remove('show');
+        }
+    });
 }
 
 // ============ DROPDOWN FUNCTIONS ============
@@ -666,14 +732,14 @@ function closeDropdown() {
 function initDropdown() {
     const userMenu = document.getElementById('userMenu');
     const dropdownMenu = document.querySelector('.dropdown-menu');
-    
+
     if (userMenu) {
         userMenu.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleDropdown();
         });
     }
-    
+
     document.addEventListener('click', (e) => {
         if (dropdownMenu && userMenu) {
             if (!userMenu.contains(e.target) && !dropdownMenu.contains(e.target)) {
@@ -708,26 +774,26 @@ function initChangePassword() {
     const modal = document.getElementById('passwordModal');
     const close = document.querySelector('.close-password');
     const form = document.getElementById('passwordForm');
-    
+
     if (btn) {
         btn.addEventListener('click', () => {
             if (modal) modal.style.display = 'block';
         });
     }
-    
+
     if (close) {
         close.addEventListener('click', () => {
             if (modal) modal.style.display = 'none';
         });
     }
-    
+
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const currentPass = document.getElementById('currentPassword').value;
             const newPass = document.getElementById('newPassword').value;
             const confirmPass = document.getElementById('confirmPassword').value;
-            
+
             if (!currentPass) {
                 showToast('Please enter current password', 'error');
                 return;
@@ -740,13 +806,13 @@ function initChangePassword() {
                 showToast('Password must be at least 6 characters', 'error');
                 return;
             }
-            
+
             showToast('Password changed successfully!', 'success');
             if (modal) modal.style.display = 'none';
             form.reset();
         });
     }
-    
+
     window.addEventListener('click', (e) => {
         if (e.target === modal && modal) {
             modal.style.display = 'none';
@@ -759,7 +825,7 @@ function launchApp(appName) {
     const modal = document.getElementById('appModal');
     const modalTitle = document.getElementById('appModalTitle');
     const modalBody = document.getElementById('appModalBody');
-    
+
     if (appName === 'concert') {
         modalTitle.innerHTML = '<i class="fas fa-ticket-alt"></i> Live Concert';
         modalBody.innerHTML = '<div class="app-loader"><i class="fas fa-spinner fa-spin"></i><p>Redirecting to ticket booking page...</p></div>';
@@ -797,7 +863,7 @@ function watchVideo(videoName) {
 function initVideoLinks() {
     const videoLinks = document.querySelectorAll('.upload-card .watch-btn');
     videoLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             if (!href || href.trim() === '' || href === '#') {
                 e.preventDefault();
@@ -821,15 +887,15 @@ function logout() {
 // ============ INITIALIZE DASHBOARD ============
 function initDashboard() {
     console.log('🎵 The Chorus - Dashboard Initialized');
-    
+
     // Load saved user data
     const savedUser = localStorage.getItem('userData');
     if (savedUser) {
         try {
             currentUser = JSON.parse(savedUser);
-        } catch(e) {}
+        } catch (e) { }
     }
-    
+
     initThemeSwitcher();
     initNotes();
     initAnnouncements();
@@ -841,24 +907,24 @@ function initDashboard() {
     initDropdown();
     initSettings();
     initChangePassword();
-    
+
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', logout);
     }
-    
+
     const closeAppBtn = document.querySelector('.close-app-modal');
     if (closeAppBtn) {
         closeAppBtn.addEventListener('click', closeAppModal);
     }
-    
+
     window.addEventListener('click', (e) => {
         const appModal = document.getElementById('appModal');
         if (e.target === appModal) {
             closeAppModal();
         }
     });
-    
+
     console.log('✅ Dashboard fully loaded!');
 }
 
