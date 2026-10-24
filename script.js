@@ -1,10 +1,4 @@
 // ============ GLOBAL VARIABLES ============
-let currentUser = {
-    name: 'The Chorus',
-    email: 'thechorusbandkolkata@gmail.com',
-    user_id: 'TC001',
-    mobile: '+91 9073556848'
-};
 let notes = [];
 let announcements = [];
 
@@ -64,29 +58,29 @@ function initThemeSwitcher() {
 const defaultAnnouncements = [
     {
         id: 1,
-        week: 'Week 1',
-        month: 'March 2025',
+        week: '3 April 2026',   // shown as the Date
+        month: 'Friday',        // shown as the Day
         message: '🎵 New song rehearsal scheduled for Friday at 6 PM. All band members please be present.',
         date: new Date().toISOString()
     },
     {
         id: 2,
-        week: 'Week 2',
-        month: 'March 2025',
+        week: '10 April 2026',
+        month: 'Friday',
         message: '🥁 Sound check for upcoming concert. Equipment setup at 4 PM.',
         date: new Date().toISOString()
     },
     {
         id: 3,
-        week: 'Week 3',
-        month: 'March 2025',
+        week: '18 April 2026',
+        month: 'Saturday',
         message: '🎸 New album recording session. Studio booked for whole day Saturday.',
         date: new Date().toISOString()
     },
     {
         id: 4,
-        week: 'Week 4',
-        month: 'March 2025',
+        week: '24 April 2026',
+        month: 'Friday',
         message: '🎤 Final rehearsal before the big show! Don\'t miss it.',
         date: new Date().toISOString()
     }
@@ -102,9 +96,9 @@ const bandMembers = [
     { id: 2, name: 'BIJAY', role: 'Lead Guitar', photo: 'bijay.png' },
     { id: 3, name: 'NONE', role: 'Rhythm Guitar', photo: 'fav.png' },
     { id: 4, name: 'PIYAL', role: 'Bass', photo: 'piyal.png' },
-    { id: 5, name: 'ABIR', role: 'Drums', photo: 'abir.png' },
+    { id: 5, name: '', role: 'Drums', photo: 'fav.png' },
     { id: 6, name: 'NONE', role: 'Lead Vocals', photo: 'fav.png' },
-    { id: 7, name: 'SHAMBHU', role: 'Lead Vocals', photo: 'sambhu.png' },
+    { id: 7, name: 'SHAMBHU', role: 'Octapad', photo: 'shambhu.png' },
     { id: 8, name: 'BISWANATH', role: 'Camera', photo: 'biswa.png' },
     { id: 9, name: 'BABU', role: 'Percussion', photo: 'babu.png' }
 ];
@@ -239,7 +233,7 @@ function renderAnnouncements() {
         <div class="announcement-item" data-id="${announcement.id}">
             <div class="announcement-content">
                 <div class="announcement-date">
-                    <i class="fas fa-calendar-week"></i>
+                    <i class="fas fa-calendar-day"></i>
                     <span>${escapeHtml(announcement.week)} (${escapeHtml(announcement.month)})</span>
                 </div>
                 <div class="announcement-message">
@@ -253,7 +247,12 @@ function renderAnnouncements() {
     `).join('');
 }
 
-async function deleteAnnouncementById(id) {
+// Deleting ALWAYS asks for the password, even if you unlocked posting a moment ago.
+function deleteAnnouncementById(id) {
+    requireAnnouncementAccess(() => performDeleteAnnouncement(id), { always: true });
+}
+
+async function performDeleteAnnouncement(id) {
     const client = window.supabaseClient;
     if (client) {
         try {
@@ -284,6 +283,8 @@ async function deleteAnnouncementById(id) {
     showToast('Announcement deleted successfully!', 'success');
 }
 
+// NOTE: the database columns are still named `week` and `month`. They now hold
+// the Date and the Day, so no Supabase change is needed and old rows still work.
 async function addNewAnnouncement(week, month, message) {
     const client = window.supabaseClient;
     if (client) {
@@ -352,9 +353,11 @@ function initAnnouncements() {
 
     if (addAnnouncementBtn) {
         addAnnouncementBtn.onclick = function () {
-            if (addAnnouncementModal) {
-                addAnnouncementModal.style.display = 'block';
-            }
+            requireAnnouncementAccess(() => {
+                if (addAnnouncementModal) {
+                    addAnnouncementModal.style.display = 'block';
+                }
+            });
         }
     }
 
@@ -368,8 +371,15 @@ function initAnnouncements() {
 
     if (saveAnnouncementBtn) {
         saveAnnouncementBtn.onclick = async function () {
-            const week = document.getElementById('announcementWeek').value;
-            const month = document.getElementById('announcementMonth').value;
+            if (!isAnnouncementUnlocked()) {
+                if (addAnnouncementModal) addAnnouncementModal.style.display = 'none';
+                requireAnnouncementAccess(() => {
+                    if (addAnnouncementModal) addAnnouncementModal.style.display = 'block';
+                });
+                return;
+            }
+            const week = document.getElementById('announcementDate').value.trim();   // Date
+            const month = document.getElementById('announcementDay').value.trim();   // Day
             const message = document.getElementById('announcementMessage').value;
 
             if (week && month && message) {
@@ -382,8 +392,8 @@ function initAnnouncements() {
                     if (addAnnouncementModal) {
                         addAnnouncementModal.style.display = 'none';
                     }
-                    document.getElementById('announcementWeek').value = '';
-                    document.getElementById('announcementMonth').value = '';
+                    document.getElementById('announcementDate').value = '';
+                    document.getElementById('announcementDay').value = '';
                     document.getElementById('announcementMessage').value = '';
                 } finally {
                     saveAnnouncementBtn.disabled = false;
@@ -556,68 +566,6 @@ function initNotes() {
     loadNotes();
 }
 
-// ============ UPDATE USER INTERFACE ============
-function updateUserInterface() {
-    const userName = currentUser?.name || 'The Chorus';
-    const userEmail = currentUser?.email || 'thechorusbandkolkata@gmail.com';
-    const userId = currentUser?.user_id || 'TC001';
-    const userAvatar = userName.substring(0, 2).toUpperCase();
-    const userMobile = currentUser?.mobile || '+91 9073556848';
-
-    const userNameEl = document.getElementById('userName');
-    const userEmailEl = document.getElementById('userEmail');
-    const userAvatarEl = document.getElementById('userAvatar');
-    const welcomeNameEl = document.getElementById('welcomeName');
-
-    if (userNameEl) userNameEl.textContent = userName;
-    if (userEmailEl) userEmailEl.textContent = userEmail;
-    if (userAvatarEl && !userAvatarEl.querySelector('img')) {
-        userAvatarEl.textContent = userAvatar;
-    }
-    if (welcomeNameEl) welcomeNameEl.textContent = userName.split(' ')[0];
-
-    const profileNameEl = document.getElementById('profileName');
-    const profileAvatarEl = document.getElementById('profileAvatar');
-    const profileUserIdEl = document.getElementById('profileUserId');
-    const profileEmailEl = document.getElementById('profileEmail');
-    const profileMobileEl = document.getElementById('profileMobile');
-    const profileJoinDateEl = document.getElementById('profileJoinDate');
-
-    if (profileNameEl) profileNameEl.textContent = userName;
-    if (profileAvatarEl) profileAvatarEl.textContent = userAvatar;
-    if (profileUserIdEl) profileUserIdEl.textContent = userId;
-    if (profileEmailEl) profileEmailEl.textContent = userEmail;
-    if (profileMobileEl) profileMobileEl.textContent = userMobile;
-    if (profileJoinDateEl) profileJoinDateEl.textContent = new Date().toLocaleDateString();
-
-    const settingsName = document.getElementById('settingsName');
-    const settingsEmail = document.getElementById('settingsEmail');
-    const settingsMobile = document.getElementById('settingsMobile');
-
-    if (settingsName) settingsName.value = userName;
-    if (settingsEmail) settingsEmail.value = userEmail;
-    if (settingsMobile) settingsMobile.value = currentUser?.mobile || '';
-
-    renderAccountDropdown();
-}
-
-// ============ SYNC SINGLE ACCOUNT INTO DROPDOWN ============
-// This site only ever has one account (The Chorus), so the dropdown just
-// mirrors the current account info instead of listing/searching multiple fans.
-function renderAccountDropdown() {
-    const userName = currentUser?.name || 'The Chorus';
-    const userEmail = currentUser?.email || 'thechorusbandkolkata@gmail.com';
-    const userAvatar = userName.substring(0, 2).toUpperCase();
-
-    const dropdownAvatarEl = document.getElementById('dropdownAvatar');
-    const dropdownNameEl = document.getElementById('dropdownName');
-    const dropdownEmailEl = document.getElementById('dropdownEmail');
-
-    if (dropdownAvatarEl) dropdownAvatarEl.textContent = userAvatar;
-    if (dropdownNameEl) dropdownNameEl.textContent = userName;
-    if (dropdownEmailEl) dropdownEmailEl.textContent = userEmail;
-}
-
 // ============ MOBILE SIDEBAR HELPERS ============
 function openMobileSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -749,25 +697,6 @@ function initDropdown() {
     });
 }
 
-// ============ SETTINGS FORM ============
-function initSettings() {
-    const settingsForm = document.getElementById('settingsForm');
-    if (settingsForm) {
-        settingsForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const newName = document.getElementById('settingsName').value;
-            const newMobile = document.getElementById('settingsMobile').value;
-            if (currentUser) {
-                currentUser.name = newName;
-                currentUser.mobile = newMobile;
-                localStorage.setItem('userData', JSON.stringify(currentUser));
-                updateUserInterface();
-            }
-            showToast('Profile updated successfully!', 'success');
-        });
-    }
-}
-
 // ============ CHANGE PASSWORD ============
 function initChangePassword() {
     const btn = document.getElementById('changePasswordBtn');
@@ -884,28 +813,162 @@ function logout() {
     }, 1000);
 }
 
+// ============ PASSWORD GATE (ANNOUNCEMENTS) ============
+// This is not a login system. It is a speed bump so only band members post or
+// delete announcements. Change the password in ONE place: ANNOUNCEMENT_PASSWORD.
+//
+// IMPORTANT: this check runs in the visitor's browser, so the password can be
+// found by anyone who views the page source. It stops casual visitors, not a
+// determined one. Real protection must be enforced in Supabase (see notes).
+const ANNOUNCEMENT_PASSWORD = '2021';
+const GATE_UNLOCK_MS = 10 * 60 * 1000;   // stay unlocked for 10 minutes
+const GATE_MAX_ATTEMPTS = 5;             // wrong tries before a short lockout
+const GATE_LOCKOUT_MS = 30 * 1000;
+
+const announcementGate = {
+    unlockedUntil: 0,
+    pendingAction: null,
+    pendingAlways: false,
+    attempts: 0,
+    lockedUntil: 0,
+    lastFocus: null
+};
+
+function isAnnouncementUnlocked() {
+    return Date.now() < announcementGate.unlockedUntil;
+}
+
+// Runs `action` straight away if unlocked, otherwise asks for the password first.
+// { always: true } ignores the unlock window and asks every single time (used for delete).
+function requireAnnouncementAccess(action, options) {
+    const always = !!(options && options.always);
+    if (!always && isAnnouncementUnlocked()) {
+        action();
+        return;
+    }
+    openPasswordGate(action, always);
+}
+
+function setGateError(message) {
+    const errorEl = document.getElementById('passwordGateError');
+    if (errorEl) errorEl.textContent = message || '';
+}
+
+function openPasswordGate(action, always) {
+    const modal = document.getElementById('passwordGateModal');
+    const input = document.getElementById('passwordGateInput');
+    if (!modal || !input) return;
+
+    announcementGate.pendingAction = action;
+    announcementGate.pendingAlways = !!always;
+
+    // say what the password is for
+    const note = modal.querySelector('.gate-note');
+    if (note) {
+        if (!note.dataset.defaultText) note.dataset.defaultText = note.textContent.trim();
+        note.textContent = always
+            ? 'Enter the band password to delete this announcement.'
+            : note.dataset.defaultText;
+    }
+    announcementGate.lastFocus = document.activeElement;
+
+    input.value = '';
+    input.classList.remove('is-error');
+    setGateError('');
+    // numeric keypad on phones when the password is digits only
+    input.inputMode = /^\d+$/.test(ANNOUNCEMENT_PASSWORD) ? 'numeric' : 'text';
+
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+    setTimeout(() => input.focus(), 50);
+}
+
+function closePasswordGate(restoreFocus = true) {
+    const modal = document.getElementById('passwordGateModal');
+    if (!modal) return;
+
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    announcementGate.pendingAction = null;
+    announcementGate.pendingAlways = false;
+
+    if (restoreFocus && announcementGate.lastFocus && announcementGate.lastFocus.focus) {
+        announcementGate.lastFocus.focus();
+    }
+    announcementGate.lastFocus = null;
+}
+
+function submitPasswordGate(e) {
+    e.preventDefault();
+    const input = document.getElementById('passwordGateInput');
+    if (!input) return;
+
+    const now = Date.now();
+    if (now < announcementGate.lockedUntil) {
+        const secs = Math.ceil((announcementGate.lockedUntil - now) / 1000);
+        setGateError('Too many attempts. Try again in ' + secs + 's.');
+        return;
+    }
+
+    if (input.value.trim() === ANNOUNCEMENT_PASSWORD) {
+        // A delete password does not unlock posting; only the add flow does.
+        if (!announcementGate.pendingAlways) {
+            announcementGate.unlockedUntil = now + GATE_UNLOCK_MS;
+        }
+        announcementGate.attempts = 0;
+        const action = announcementGate.pendingAction;
+        closePasswordGate(false);        // the action usually opens another modal
+        if (action) action();
+        return;
+    }
+
+    announcementGate.attempts += 1;
+    if (announcementGate.attempts >= GATE_MAX_ATTEMPTS) {
+        announcementGate.attempts = 0;
+        announcementGate.lockedUntil = now + GATE_LOCKOUT_MS;
+        setGateError('Too many attempts. Try again in ' + (GATE_LOCKOUT_MS / 1000) + 's.');
+    } else {
+        setGateError('Incorrect password. Please try again.');
+    }
+    input.value = '';
+    // restart the shake animation
+    input.classList.remove('is-error');
+    void input.offsetWidth;
+    input.classList.add('is-error');
+    input.focus();
+}
+
+function initPasswordGate() {
+    const modal = document.getElementById('passwordGateModal');
+    const form = document.getElementById('passwordGateForm');
+    const closeBtn = document.querySelector('.close-password-gate');
+    if (!modal || !form) return;
+
+    form.addEventListener('submit', submitPasswordGate);
+    if (closeBtn) closeBtn.addEventListener('click', () => closePasswordGate());
+
+    // click on the dark backdrop closes it
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closePasswordGate();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') closePasswordGate();
+    });
+}
+
 // ============ INITIALIZE DASHBOARD ============
 function initDashboard() {
     console.log('🎵 The Chorus - Dashboard Initialized');
-
-    // Load saved user data
-    const savedUser = localStorage.getItem('userData');
-    if (savedUser) {
-        try {
-            currentUser = JSON.parse(savedUser);
-        } catch (e) { }
-    }
 
     initThemeSwitcher();
     initNotes();
     initAnnouncements();
     initVideoLinks();
     renderBandMembers();
-    updateUserInterface();
     initNavigation();
     initSidebarToggle();
     initDropdown();
-    initSettings();
+    initPasswordGate();
     initChangePassword();
 
     const logoutBtn = document.getElementById('logoutBtn');
@@ -937,3 +1000,247 @@ window.addNewAnnouncement = addNewAnnouncement;
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initDashboard);
+
+// ===================================================
+// RECORDINGS - AUTO VIDEO THUMBNAILS
+// Nothing needs uploading: each .release-card reads its own href and finds the
+// image automatically.
+//   1. data-thumb="my-image.png"  (OPTIONAL - your own image always wins)
+//   2. YouTube / Vimeo            (the video's own thumbnail)
+//   3. Any other link, e.g. Facebook / Instagram: best-effort preview image
+//      from the page itself via the free Microlink service. Some sites block
+//      this; then the card keeps its coloured placeholder (or use data-thumb).
+// Size: by default every thumbnail FILLS the card (the original size).
+// To show the whole picture instead (nothing cropped, on a soft blurred fill),
+// add data-thumb-fit="contain" to that card's <a>.
+// Cards with no link yet keep the coloured placeholder and are not clickable.
+// ===================================================
+function getYouTubeId(url) {
+    try {
+        const u = new URL(url);
+        const host = u.hostname.replace(/^www\.|^m\./, '');
+        if (host === 'youtu.be') return u.pathname.slice(1).split('/')[0] || null;
+        if (host === 'youtube.com' || host === 'music.youtube.com' || host === 'youtube-nocookie.com') {
+            if (u.pathname === '/watch') return u.searchParams.get('v');
+            const m = u.pathname.match(/^\/(?:embed|shorts|live|v)\/([\w-]{6,})/);
+            return m ? m[1] : null;
+        }
+    } catch (e) { /* not a valid URL */ }
+    return null;
+}
+
+function getVimeoUrl(url) {
+    try {
+        const u = new URL(url);
+        const host = u.hostname.replace(/^www\./, '');
+        if ((host === 'vimeo.com' || host === 'player.vimeo.com') && /\d{5,}/.test(u.pathname)) return url;
+    } catch (e) { /* not a valid URL */ }
+    return null;
+}
+
+// ---- Best-effort preview image for any other link (Facebook, Instagram...) ----
+const PREVIEW_CACHE_PREFIX = 'chorus:preview:';
+const PREVIEW_HIT_MS = 12 * 60 * 60 * 1000;   // CDN image links expire, so keep it short
+const PREVIEW_MISS_MS = 2 * 60 * 60 * 1000;   // don't hammer the free API after a miss
+
+function isUsablePreviewImage(src) {
+    try {
+        const u = new URL(src);
+        if (u.protocol !== 'https:') return false;
+        // generic site artwork (not the video's own frame)
+        if (/static\.xx\.fbcdn\.net|rsrc\.php|favicon|logo/i.test(u.href)) return false;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function readPreviewCache(url) {
+    try {
+        const c = JSON.parse(localStorage.getItem(PREVIEW_CACHE_PREFIX + url) || 'null');
+        if (c && Date.now() < c.exp) return { img: c.img || null };
+    } catch (e) { /* storage unavailable */ }
+    return null;
+}
+
+function writePreviewCache(url, img) {
+    try {
+        localStorage.setItem(
+            PREVIEW_CACHE_PREFIX + url,
+            JSON.stringify({ img: img, exp: Date.now() + (img ? PREVIEW_HIT_MS : PREVIEW_MISS_MS) })
+        );
+    } catch (e) { /* storage unavailable */ }
+}
+
+function clearPreviewCache(url) {
+    try { localStorage.removeItem(PREVIEW_CACHE_PREFIX + url); } catch (e) { /* ignore */ }
+}
+
+function fetchPreviewImage(url) {
+    const cached = readPreviewCache(url);
+    if (cached) return Promise.resolve(cached.img);
+
+    return fetch('https://api.microlink.io/?url=' + encodeURIComponent(url))
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('preview failed'))))
+        .then((json) => {
+            const src = json && json.data && json.data.image && json.data.image.url;
+            const good = src && isUsablePreviewImage(src) ? src : null;
+            writePreviewCache(url, good);
+            return good;
+        })
+        .catch(() => null);
+}
+
+function applyReleaseThumb(art, src, fallbackSrc, onFail, fit) {
+    if (!art || !src) return;
+    const img = new Image();
+    img.className = fit ? 'release-thumb release-thumb--fit' : 'release-thumb';
+    img.alt = '';
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    img.referrerPolicy = 'no-referrer'; // CDNs often reject images with a foreign referrer
+
+    // Blurred copy of the same image fills the space around a fitted thumbnail
+    const bg = fit ? document.createElement('div') : null;
+    if (bg) bg.className = 'release-thumb-bg';
+
+    const fail = () => {
+        img.remove();                 // keep the coloured placeholder...
+        if (bg) bg.remove();
+        if (onFail) onFail();         // ...unless there is another source to try
+    };
+    img.onerror = () => {
+        if (fallbackSrc && img.src !== fallbackSrc) {
+            img.src = fallbackSrc;
+        } else {
+            fail();
+        }
+    };
+    img.onload = () => {
+        // YouTube serves a 120x90 grey stub when maxresdefault doesn't exist
+        if (fallbackSrc && img.naturalWidth <= 120 && img.src !== fallbackSrc) {
+            img.src = fallbackSrc;
+            return;
+        }
+        if (bg) bg.style.backgroundImage = 'url("' + img.src.replace(/"/g, '%22') + '")';
+        art.classList.add('has-thumb');
+        if (fit) art.classList.add('is-fit');
+    };
+    img.src = src;
+    art.insertBefore(img, art.firstChild);
+    if (bg) art.insertBefore(bg, art.firstChild);
+}
+
+function initReleaseThumbnails() {
+    document.querySelectorAll('.release-card').forEach((card) => {
+        const href = (card.getAttribute('href') || '').trim();
+        const art = card.querySelector('.release-art');
+
+        // Default: fill the card. data-thumb-fit="contain" shows the whole picture.
+        const wholeFrame = (card.dataset.thumbFit || '').toLowerCase() === 'contain';
+        const manualFit = wholeFrame;
+        const autoFit = wholeFrame;
+
+        // No link yet: don't open a blank tab pointing at this same page
+        if (!href) {
+            // ...but still show the card's own image if it has one
+            const emptyThumb = (card.dataset.thumb || '').trim();
+            if (emptyThumb) applyReleaseThumb(art, emptyThumb, null, null, manualFit);
+            card.classList.add('is-empty');
+            card.setAttribute('aria-disabled', 'true');
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('Video coming soon!', 'info');
+            });
+            return;
+        }
+
+        // Automatic thumbnail (YouTube / Vimeo). Used when there is no data-thumb,
+        // or when the data-thumb image file is missing or fails to load.
+        const useAutoThumb = () => {
+            const ytId = getYouTubeId(href);
+            if (ytId) {
+                applyReleaseThumb(
+                    art,
+                    'https://i.ytimg.com/vi/' + ytId + '/maxresdefault.jpg',
+                    'https://i.ytimg.com/vi/' + ytId + '/mqdefault.jpg',
+                    undefined,
+                    autoFit
+                );
+                return;
+            }
+
+            const vimeoUrl = getVimeoUrl(href);
+            if (vimeoUrl) {
+                fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(vimeoUrl))
+                    .then((r) => (r.ok ? r.json() : Promise.reject(new Error('oEmbed failed'))))
+                    .then((data) => {
+                        if (data && data.thumbnail_url) {
+                            applyReleaseThumb(art, data.thumbnail_url.replace(/_\d+x\d+/, '_1280'), null, null, autoFit);
+                        }
+                    })
+                    .catch(() => { /* keep the placeholder */ });
+                return;
+            }
+
+            // Facebook, Instagram, anything else: ask the page for its preview image
+            fetchPreviewImage(href).then((src) => {
+                if (!src) return;
+                applyReleaseThumb(art, src, null, () => clearPreviewCache(href), autoFit);
+            });
+        };
+
+        const manual = (card.dataset.thumb || '').trim();
+        if (manual) {
+            applyReleaseThumb(art, manual, null, useAutoThumb, manualFit);
+        } else {
+            useAutoThumb();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initReleaseThumbnails);
+
+// ===================================================
+// HEADER THEME
+// The header starts light-on-dark over the hero. Once the page scrolls past
+// the hero it sits over pale sections, so it flips to dark-on-light
+// (.site-header.is-light) to stay readable on desktop and mobile.
+// ===================================================
+function initHeaderTheme() {
+    const header = document.getElementById('siteHeader');
+    const hero = document.querySelector('.hero-scene');
+    if (!header || !hero) return;
+
+    let ticking = false;
+    const update = () => {
+        ticking = false;
+        const heroBottom = hero.offsetTop + hero.offsetHeight;
+        header.classList.toggle('is-light', window.scrollY + header.offsetHeight >= heroBottom);
+    };
+    const onScroll = () => {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('orientationchange', onScroll);
+    update();
+}
+
+document.addEventListener('DOMContentLoaded', initHeaderTheme);
+
+/* WhatsApp buttons: the number is not in the link, so hovering shows no URL */
+(function () {
+  var phone = ["91", "98045", "92246"].join("");
+  document.querySelectorAll("[data-whatsapp]").forEach(function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      var text = encodeURIComponent(el.getAttribute("data-whatsapp") || "");
+      window.open("https://wa.me/" + phone + "?text=" + text, "_blank", "noopener");
+    });
+  });
+})();

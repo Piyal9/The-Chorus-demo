@@ -1,424 +1,370 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <!-- Try loading the image favicon first -->
-    <link rel="icon" type="image/png" href="index.png">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f0e8" />
+    <meta
+      name="description"
+      content="The Chorus — "
+    />
     <title>The Chorus | Official Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <img src="index.png" alt="Band Logo" class="logo-img">
-                <span>The Chorus</span>
-                <div class="logo-tagline">Where Music Lives</div>
-            </div>
-            <button id="sidebarCloseBtn" class="sidebar-close-btn" aria-label="Close navigation">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <nav class="sidebar-nav">
-            <a href="#" class="nav-item active" data-page="home">
-                <i class="fas fa-home"></i>
-                <span>HOME</span>
-            </a>
-            <a href="#" class="nav-item" data-page="profile">
-                <i class="fas fa-users"></i>
-                <span>Profiles</span>
-            </a>
-            <a href="#" class="nav-item" data-page="uploads">
-                <i class="fas fa-upload"></i>
-                <span>Uploads</span>
-            </a>
-            <a href="#" class="nav-item" data-page="support">
-                <i class="fas fa-headset"></i>
-                <span>Support</span>
-            </a>
-            <a href="#" class="nav-item" data-page="settings">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-        </nav>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="siteHeader">
+      <a class="brand" href="#top" aria-label="The Chorus home">
+        <span class="brand-mark"
+          ><img src="index.png" alt="The Chorus logo"
+        /></span>
+        <span class="brand-name">The Chorus</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#manifesto">Manifesto</a>
+        <a href="#members">The band</a>
+        <a href="#recordings">Recordings</a>
+        <a href="#contact">Contacts</a>
+      </nav>
+      <a class="header-cta" href="mailto:thechorusbandkolkata@gmail.com"
+        >Book the band <span>↗</span></a
+      >
+    </header>
 
-        <div class="sidebar-footer">
-            <!-- Social Media Icons -->
-            <div class="social-icons">
-                <a href="https://www.instagram.com/thechorusband/" target="_blank" class="social-icon instagram" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.linkedin.com/company/thechorus/" target="_blank" class="social-icon linkedin" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://x.com/thechorusband" target="_blank" class="social-icon twitter" title="X (Twitter)">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.youtube.com/c/thechorus" target="_blank" class="social-icon youtube" title="YouTube">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61568279226917" target="_blank" class="social-icon spotify" title="Spotify">
-                    <i class="fab fa-facebook"></i>
-                </a>
-            </div>
-            
-            <div class="sidebar-copyright">
-                <div class="copyright-title">@ copyright 2026 <a href="https://piyal9.github.io/Piyal_Web/" target="_blank" rel="noopener noreferrer" class="copyright-link">Piyal Technologies</a></div>
-                <div class="copyright-reserved">All right reserved</div>
-            </div>
+    <main id="top">
+      <section class="hero-scene" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-dot"></span> The Chorus |  Kolkata · India
+          </p>
+          <h1 id="hero-title">
+            Where Music Lives<br />
+          </h1>
+          <p class="hero-lede">
+            A Seven-piece collective making songs for the space between the last
+            light and the first note.
+          </p>
+          <div class="hero-actions">
+            <a class="button button--light" href="#recordings"
+              >Explore recordings <span>↗</span></a
+            >
+            <a
+              class="button button--outline"
+              href="#contact"
+              data-whatsapp="Hello The Chorus, I want to book a live show."
+              >Book live shows <span>↗</span></a
+            >
+          </div>
         </div>
+        <div class="hero-caption">
+          A Music Session by The Chorus <span></span> Vol. Live
+        </div>
+      </section>
+
+      <section class="announcement-section section-paper" id="announcements">
+        <div class="section-index">01 / 05</div>
+        <div class="announcement-header">
+          <div>
+            <p class="kicker">Stay in the room</p>
+            <h2>Announcements.<br /></h2>
+          </div>
+          <button
+            class="announcement-add-button"
+            id="addAnnouncementBtn"
+            type="button"
+          >
+            <i class="fas fa-plus"></i> Add announcement
+          </button>
+        </div>
+        <div class="announcements-container" id="announcementsContainer">
+          <div class="empty-announcements">
+            <i class="fas fa-calendar-alt"></i>
+            <p>Loading rehearsal announcements...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="manifesto section-dark" id="manifesto">
+        <div class="section-index">02 / 05</div>
+        <div class="manifesto-grid">
+          <div class="manifesto-side">
+            <p class="kicker">Our frequency</p>
+            <!-- IMAGE SLOT: put your picture next to index.html and add
+                 src="your-image.jpg" to the <img> below. Until then nothing shows. -->
+            <figure class="manifesto-media">
+              <img
+                alt="The Chorus"
+                loading="lazy"
+                onerror="this.closest('.manifesto-media').hidden = true"
+              />
+            </figure>
+          </div>
+          <div>
+            <h2>Every lyric tells a story,<br /><em>Every chord shares a soul.</em></h2>
+            <p class="section-copy">
+              The Chorus is an Independent Music Group built around live
+              energy, honest writing, and the beautiful friction of Seven
+              different points of view. We make records that leave a mark after
+              the room goes quiet.
+            </p>
+            <a class="text-link text-link--gold" href="#members"
+              >Meet the people <span>↗</span></a
+            >
+          </div>
+        </div>
+        <div class="manifesto-word" aria-hidden="true">LISTEN</div>
+      </section>
+
+      <section class="members section-paper" id="members">
+        <div class="section-index">03 / 05</div>
+        <div class="section-heading">
+          <div>
+            <p class="kicker">The people behind the pulse</p>
+            <h2>The<br /><em>Master Minds.</em></h2>
+          </div>
+          <p class="heading-note">
+            Every part has a point of view.<br />Every point of view makes the changes
+            better.
+          </p>
+        </div>
+        <div class="members-grid" id="profilesGrid"></div>
+      </section>
+
+      <section class="listening-room section-dark" id="recordings">
+        <div class="section-index">04 / 05</div>
+        <div class="section-heading section-heading--light">
+          <div>
+            <p class="kicker">The archive</p>
+            <h2>Recordings.<br /><em>Press play.</em></h2>
+          </div>
+          <p class="heading-note">
+            Video, live sessions, and<br />fragments from the room.
+          </p>
+        </div>
+        <div class="listening-grid">
+          <!-- Replace each empty href with your own video URL. -->
+          <a
+            class="release-card release-card--large"
+            href="https://www.facebook.com/reel/2003924950335430"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="release-art release-art--red"
+              ><i class="fas fa-play"></i></span
+            ><span class="release-meta">Band Intro</span
+            ><strong>Stage Intro</strong><small>Official music video</small
+            ><span class="card-arrow">↗</span>
+          </a>
+          <a
+            class="release-card"
+            href="https://www.facebook.com/reel/1736492280892338/"
+            data-thumb="rehearsal.png"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="release-art release-art--blue"
+              ><i class="fas fa-wave-square"></i></span
+            ><span class="release-meta">Practice SESSION</span
+            ><strong>Practice Echoes</strong><small>Studio fragments</small
+            ><span class="card-arrow">↗</span>
+          </a>
+          <a
+            class="release-card"
+            href="https://youtu.be/PcnvV5zTCPw?si=5pcP1zEzyXwkEvNL"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="release-art release-art--gold"
+              ><i class="fas fa-headphones"></i></span
+            ><span class="release-meta">LIVE</span
+            ><strong>Live Shows</strong><small>Live session</small
+            ><span class="card-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="contact-section section-paper" id="contact">
+        <div class="section-index">05 / 05</div>
+        <div class="contact-layout">
+          <div>
+            <p class="kicker">The next scene</p>
+            <h2>Chaos<br /><em>Unleashed.</em></h2>
+          </div>
+          <div class="contact-copy">
+            <p>
+              For live shows, collaborations, film scores, or simply to say
+              hello.
+            </p>
+            <div class="contact-actions">
+              <a
+                class="contact-email"
+                href="mailto:thechorusbandkolkata@gmail.com?subject=Hello%20from%20the%20website"
+                aria-label="Email The Chorus at thechorusbandkolkata@gmail.com"
+              >
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                <span class="contact-email-text"
+                  >thechorusbandkolkata@gmail.com</span
+                >
+                <span class="contact-email-arrow" aria-hidden="true">↗</span>
+              </a>
+              <a
+                class="contact-email contact-whatsapp"
+                href="#contact"
+                data-whatsapp="Hello The Chorus, I want to know about the show prices."
+                aria-label="Chat with The Chorus on WhatsApp"
+              >
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                <span class="contact-email-text">WhatsApp</span>
+                <span class="contact-email-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <div class="contact-details">
+              <span>Kolkata / India</span><span>Available worldwide</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">The Chorus <span>© Copyright 2026</span></div>
+      <div class="footer-socials">
+        <a
+          href="https://www.instagram.com/thechorus/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="The Chorus on Instagram"
+          title="Instagram"
+          ><i class="fa-brands fa-instagram" aria-hidden="true"></i
+        ></a>
+        <a
+          href="https://www.facebook.com/profile.php?id=61568279226917"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="The Chorus on Facebook"
+          title="Facebook"
+          ><i class="fa-brands fa-facebook-f" aria-hidden="true"></i
+        ></a>
+        <a
+          href="https://www.youtube.com/@Thechoruskolkata"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="The Chorus on YouTube"
+          title="YouTube"
+          ><i class="fa-brands fa-youtube" aria-hidden="true"></i
+        ></a>
+        <a
+          href="https://x.com/thechorusband"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="The Chorus on X"
+          title="X"
+          ><i class="fa-brands fa-x-twitter" aria-hidden="true"></i
+        ></a>
+      </div>
+      <p class="footer-rights">
+        All Rights Reserved
+        <a
+          class="footer-credit"
+          href="https://piyal9.github.io/Piyal_Web/"
+          target="_blank"
+          rel="noopener"
+          >Piyal Technologies ↗</a
+        >
+      </p>
+    </footer>
+
+    <div class="modal" id="addAnnouncementModal" aria-hidden="true">
+      <div class="modal-panel announcement-modal-panel">
+        <button class="modal-close close-announcement-modal" aria-label="Close">
+          ×
+        </button>
+        <p class="kicker">The rehearsal room</p>
+        <h2>Add announcement</h2>
+        <div class="announcement-form">
+          <label for="announcementDate">Date</label>
+          <input id="announcementDate" type="text" placeholder="12 April 2026" />
+          <label for="announcementDay">Day</label>
+          <input id="announcementDay" type="text" placeholder="Sunday" />
+          <label for="announcementMessage">Message</label>
+          <textarea
+            id="announcementMessage"
+            rows="4"
+            placeholder="Write the announcement..."
+          ></textarea>
+          <button
+            id="saveAnnouncementBtn"
+            class="announcement-save-button"
+            type="button"
+          >
+            Publish announcement
+          </button>
+        </div>
+      </div>
     </div>
-
-    <!-- Mobile Sidebar Backdrop Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <button id="sidebarToggle" class="sidebar-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <div class="top-bar-right">
-                <!-- Theme Switcher -->
-                <div class="theme-switcher" id="themeSwitcher">
-                    <i class="fas fa-palette"></i>
-                    <div class="theme-dropdown" id="themeDropdown">
-                        <div class="theme-option" data-theme="default">
-                            <div class="theme-color default"></div>
-                            <span>Default Purple</span>
-                        </div>
-                        <div class="theme-option" data-theme="black-gold">
-                            <div class="theme-color black-gold"></div>
-                            <span>Black & Gold</span>
-                        </div>
-                        <div class="theme-option" data-theme="midnight-red">
-                            <div class="theme-color midnight-red"></div>
-                            <span>Midnight Red</span>
-                        </div>
-                        <div class="theme-option" data-theme="wine-red">
-                            <div class="theme-color wine-red"></div>
-                            <span>Wine Red</span>
-                        </div>
-                        <div class="theme-option" data-theme="midnight-purple">
-                            <div class="theme-color midnight-purple"></div>
-                            <span>Midnight Purple</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Notifications Box -->
-                <div class="notifications-wrapper">
-                    <div class="notifications-icon" id="notificationsIcon">
-                        <i class="fas fa-sticky-note"></i>
-                        <span class="badge" id="notesCount">0</span>
-                    </div>
-                    
-                    <div class="notes-box" id="notesBox">
-                        <div class="notes-header">
-                            <h3><i class="fas fa-sticky-note"></i> Important Notes</h3>
-                            <button class="add-note-btn" id="addNoteBtn">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div class="notes-list" id="notesList">
-                            <div class="empty-notes">
-                                <i class="fas fa-edit"></i>
-                                <p>No notes yet. Click + to add a note</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="viewer-badge" id="viewerBadge">
-                    <div class="viewer-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <span class="viewer-greeting-text">Hi viewer</span>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Page Content -->
-        <div class="page-content">
-            <!-- HOME Page -->
-            <div id="homePage" class="page active">
-                <div class="welcome-section">
-                    <h1>Welcome to The Chorus</h1>
-                    <p>Every lyric tells a story, Every chord shares a soul.</p>
-                </div>
-
-                <!-- Live Concert & New Album Side by Side -->
-                <div class="two-column-grid">
-                    <!-- Live Concert Card -->
-                    <div class="feature-card" data-feature="concert">
-                        <div class="feature-icon">
-                            <i class="fas fa-guitar"></i>
-                        </div>
-                        <div class="feature-info">
-                            <h3>Live Concert</h3>
-                            <p class="event-title">Where Stars Shines</p>
-                            <p class="date"><i class="fas fa-calendar"></i>Book Shows</p>
-                            <p class="location"><i class="fas fa-map-marker-alt"></i>India</p>
-                        </div>
-                        <button class="feature-btn" onclick="launchApp('concert')">
-                            <i class="fas fa-ticket-alt"></i> Contact Us
-                        </button>
-                    </div>
-
-                    <!-- New Album Release Card -->
-                    <div class="feature-card" data-feature="album">
-                        <div class="feature-icon">
-                            <i class="fas fa-compact-disc"></i>
-                        </div>
-                        <div class="feature-info">
-                            <h3>New Album Release</h3>
-                            <p class="event-title">Echoes of Tomorrow</p>
-                            <p class="date"><i class="fas fa-calendar"></i>Update Soon</p>
-                            <p class="location"><i class="fas fa-cloud-music"></i> All Platforms</p>
-                        </div>
-                        <button class="feature-btn" onclick="launchApp('album')">
-                            <i class="fas fa-heart"></i> Pre-save Now
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Rehearsal Announcement Box -->
-                <div class="rehearsal-section">
-                    <div class="rehearsal-header-box">
-                        <div class="rehearsal-title">
-                            <i class="fas fa-drum"></i>
-                            <h3>Weekly Rehearsal Announcements</h3>
-                        </div>
-                        <button class="add-announcement-btn" id="addAnnouncementBtn">
-                            <i class="fas fa-plus"></i> Add Announcement
-                        </button>
-                    </div>
-                    <div class="announcements-container" id="announcementsContainer">
-                        <!-- Announcements will be loaded dynamically here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profile Page -->
-            <div id="profilePage" class="page">
-                <div class="welcome-section">
-                    <h1>Profiles</h1>
-                    <p>Meet the musicians of The Chorus</p>
-                </div>
-
-                <div class="profiles-grid" id="profilesGrid">
-                    <!-- Musician cards will be loaded dynamically here -->
-                </div>
-            </div>
-
-            <!-- Uploads Page -->
-            <div id="uploadsPage" class="page">
-                <div class="welcome-section">
-                    <h1>Video Uploads</h1>
-                    <p>Watch our latest music videos and behind-the-scenes content</p>
-                </div>
-                
-                <div class="uploads-container">
-                    <div class="upload-card">
-                        <div class="video-thumbnail">
-                            <i class="fas fa-play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3>Official Music Video - "Midnight Dreams"</h3>
-                            <p>Uploaded: June 1, 2024 | Views: 1.2M</p>
-                            <a href="" class="watch-btn" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-play"></i> Watch Now
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="upload-card">
-                        <div class="video-thumbnail">
-                            <i class="fas fa-play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3>Behind The Scenes - Album Recording</h3>
-                            <p>Uploaded: May 15, 2024 | Views: 450K</p>
-                            <a href="" class="watch-btn" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-play"></i> Watch Now
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="upload-card">
-                        <div class="video-thumbnail">
-                            <i class="fas fa-play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3>Live Performance - Summer Fest 2024</h3>
-                            <p>Uploaded: July 16, 2024 | Views: 890K</p>
-                            <a href="" class="watch-btn" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-play"></i> Watch Now
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="upload-card">
-                        <div class="video-thumbnail">
-                            <i class="fas fa-play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3>Interview - The Story Behind "Echoes"</h3>
-                            <p>Uploaded: July 20, 2024 | Views: 210K</p>
-                            <a href="" class="watch-btn" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-play"></i> Watch Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Support Page -->
-            <div id="supportPage" class="page">
-                <div class="welcome-section">
-                    <h1>Support Center</h1>
-                    <p>Get help with tickets, merchandise, or general inquiries</p>
-                </div>
-
-                <div class="support-container">
-                    <div class="support-card">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <a href="mailto:supportchorus@gmail.com" class="support-link">supportchorus@gmail.com</a>
-                        <a href="mailto:thechorusbandkolkata@gmail.com" class="support-link">thechorusbandkolkata@gmail.com</a>
-                        <p>Response within 24 hours</p>
-                    </div>
-                    <div class="support-card">
-                        <i class="fas fa-phone-alt"></i>
-                        <h3>Contact</h3>
-                        <a href="tel:+919073556848" class="support-link">+91 9073556848</a>
-                        <p>Mon-Sun | 9AM - 6PM</p>
-                    </div>
-                    <div class="support-card">
-                        <i class="fab fa-discord"></i>
-                        <h3>Discord Community</h3>
-                        <p>Join our server for live chat</p>
-                        <a href="#" class="support-link">Coming Soon</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Settings Page -->
-            <div id="settingsPage" class="page">
-                <div class="welcome-section">
-                    <h1>Settings</h1>
-                    <p>Customize your fan experience</p>
-                </div>
-                
-                    
-                    <div class="settings-card">
-                        <h3>Notification Preferences</h3>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" id="notifyEvents"> Notify me about upcoming events
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" id="notifyMusic"> Notify me about new music releases
-                            </label>
-                        </div>
-                        <button class="save-btn" id="saveNotificationsBtn">Save Preferences</button>
-                    </div>
-
-                    
-                </div>
-            </div>
-        </div>
+    <div
+      class="modal"
+      id="passwordGateModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="passwordGateTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-panel announcement-modal-panel password-gate-panel">
+        <button
+          class="modal-close close-password-gate"
+          type="button"
+          aria-label="Close"
+        >
+          ×
+        </button>
+        <p class="kicker">Band members only</p>
+        <h2 id="passwordGateTitle">Enter password</h2>
+        <p class="gate-note">
+          Only band members can post or delete announcements.
+        </p>
+        <form
+          class="announcement-form"
+          id="passwordGateForm"
+          autocomplete="off"
+          novalidate
+        >
+          <label for="passwordGateInput">Password</label>
+          <input
+            id="passwordGateInput"
+            type="password"
+            autocomplete="off"
+            placeholder="Enter password"
+          />
+          <p class="gate-error" id="passwordGateError" role="alert"></p>
+          <button class="announcement-save-button" type="submit">
+            Unlock
+          </button>
+        </form>
+      </div>
     </div>
-
-    <!-- Add Announcement Modal -->
-    <div id="addAnnouncementModal" class="modal">
-        <div class="modal-content note-modal">
-            <div class="modal-header">
-                <h3><i class="fas fa-plus-circle"></i> Add New Announcement</h3>
-                <span class="close-announcement-modal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="announcementWeek" placeholder="Week (e.g., Week 1)" class="note-title-input">
-                <input type="text" id="announcementMonth" placeholder="Month (e.g., March 2025)" class="note-title-input">
-                <textarea id="announcementMessage" rows="4" placeholder="Write your announcement here..."></textarea>
-                <button id="saveAnnouncementBtn" class="register-btn">Add Announcement</button>
-            </div>
-        </div>
+    <div class="modal" id="appModal" aria-hidden="true">
+      <div class="modal-panel">
+        <button class="modal-close close-app-modal" aria-label="Close">
+          ×
+        </button>
+        <div id="appModalTitle"></div>
+        <div id="appModalBody"></div>
+      </div>
     </div>
+    <div id="toast" class="toast" role="status"></div>
 
-    <!-- Add Note Modal -->
-    <div id="addNoteModal" class="modal">
-        <div class="modal-content note-modal">
-            <div class="modal-header">
-                <h3><i class="fas fa-plus-circle"></i> Add New Note</h3>
-                <span class="close-note-modal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="noteTitle" placeholder="Note title..." class="note-title-input">
-                <textarea id="noteContent" rows="4" placeholder="Write your note here..."></textarea>
-                <button id="saveNoteBtn" class="register-btn">Save Note</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Event Launch Modal -->
-    <div id="appModal" class="modal">
-        <div class="modal-content app-modal-content">
-            <div class="modal-header">
-                <h3 id="appModalTitle"><i class="fas fa-rocket"></i> Loading Event</h3>
-                <span class="close-app-modal">&times;</span>
-            </div>
-            <div class="modal-body" id="appModalBody">
-                <div class="app-loader">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Preparing your experience...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Change Password Modal -->
-    <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-key"></i> Change Password</h3>
-                <span class="close-password">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="passwordForm">
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="currentPassword" placeholder="Current Password" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-key"></i>
-                        <input type="password" id="newPassword" placeholder="New Password (min 6 characters)" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-check-circle"></i>
-                        <input type="password" id="confirmPassword" placeholder="Confirm New Password" required>
-                    </div>
-                    <button type="submit" class="register-btn">Update Password</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div id="toast" class="toast"></div>
-
-    <!-- Supabase Client & Config -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
